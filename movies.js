@@ -21,21 +21,22 @@ function cambiarArchivo(){
     selector.dispatchEvent(evento);
 }
 
+//selector.addEventListener('cambioModo', mensajeModo);
+
 function mensajeModo(){
     alert("El archivo de busqueda ahora es :" + selector.value);
 }
 
 function verificarInput(evento){
-    if((evento.keyCode < 65 || evento.keyCode > 90) && evento.keyCode != 32 && evento.keyCode != 8){
+    if( (evento.keyCode < 65 || evento.keyCode > 90) && evento.keyCode != 32 && evento.keyCode != 8){
         evento.preventDefault();
     }
 }
 
 function buscar(){
     lista.innerHTML = "";
-
     fetch(archivo)
-    .then(respuesta => respuesta.json)
+    .then(respuesta => respuesta.json())
     .then(function(salida){
         for(let item of salida.data){
             if( item.nombre.startsWith(input.value.toUpperCase()) ) {
@@ -55,14 +56,17 @@ function buscar(){
                     let p = document.getElementById(item.nombre);
                     p.style.display = 'none';
                 });
+
                 li.appendChild(p);
                 lista.appendChild(li);
             }
         }
-
     })
     .catch(function(error){
         console.log(error);
     })
 
 }
+
+
+
